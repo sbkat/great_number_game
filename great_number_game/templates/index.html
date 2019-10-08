@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Great Number Game</title>
+</head>
+
+<body style="text-align: center;">
+    <h1>Welcome to the Great Number Game!</h1>
+    <p>I am thinking of a number between 1 and 100</p>
+    <p>Take a guess!</p>
+
+    <form action="submit" method="post">
+        <input type="text" name="guessed_number">
+        <button type="submit">Submit</button>
+    </form>
+
+    <div style="color:white; margin-left:550px;margin-top:20px; margin-bottom:20px;">
+        {% if session["result_message"] == "Too low!" %}
+            <div style="width:150px; height:150px; text-align:center;padding:50px;background-color:red;">{{ session["result_message"] }}</div>
+        {% elif session["result_message"] == "Too high!" %}
+            <div style="width:150px; height:150px; text-align:center;padding:50px;background-color:red;">{{ session["result_message"] }}</div>
+        {% elif session["result_message"] == "yas" %}
+            <div style="width:150px; height:150px; text-align:center;padding:50px;background-color:white;">{{ session["result_message"] }}</div>
+        {% else %}
+            <div style="width:150px; height:150px; text-align:center;padding:50px;background-color:green;">{{ session["result_message"] }}</div>
+        {% endif %}
+    </div>
+
+    <p>Number of attempts: {{ session['counter'] }}</p>
+    {% if session['counter'] > 5 %}
+    <p>You LOSE!! LOSER</p>
+        <form action="reset" method="post">
+            <button type="submit" name="reset">Try again!</button>
+        </form>
+    {% endif %}
+
+    {% if session["result_message"] == "That was the number!" %}
+        <form action="reset" method="post">
+            <button type="submit" name="reset">Play again!</button>
+        </form>
+    {% endif %} 
+
+</body>
+
+</html>
